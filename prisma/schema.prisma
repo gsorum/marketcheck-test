@@ -1,0 +1,372 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model dealers {
+  dealer_id       Int     @id @default(autoincrement())
+  mc_dealer_id    String
+  dealership_name String  @db.Citext
+  zip_code        String  @db.Citext
+  dealer_type     String? @db.Citext
+
+  @@unique([mc_dealer_id, dealership_name, zip_code, dealer_type], map: "mc_dealers_nk")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model dip_dealers {
+  dealer_id       BigInt?
+  source_url      String? @db.Citext
+  store_number    String? @db.Citext
+  dealership_name String? @db.Citext
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ext_dip_dealerships {
+  dealership_name String? @db.Citext
+  zip             String? @db.Citext
+  store_number    String? @db.Citext
+  url             String? @db.Citext
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ext_partial_data_dump {
+  vin                           String? @db.Citext
+  zip                           String? @db.Citext
+  neo_year                      String? @db.Citext
+  neo_make                      String? @db.Citext
+  neo_model                     String? @db.Citext
+  neo_trim                      String? @db.Citext
+  neo_trim_confidence           String? @db.Citext
+  neo_version                   String? @db.Citext
+  neo_version_confidence        String? @db.Citext
+  neo_vehicle_type              String? @db.Citext
+  neo_body_type                 String? @db.Citext
+  neo_body_subtype              String? @db.Citext
+  neo_drivetrain                String? @db.Citext
+  neo_powertrain_type           String? @db.Citext
+  neo_fuel_type                 String? @db.Citext
+  neo_engine                    String? @db.Citext
+  neo_engine_block              String? @db.Citext
+  neo_engine_size               String? @db.Citext
+  neo_transmission              String? @db.Citext
+  neo_doors                     String? @db.Citext
+  neo_cylinders                 String? @db.Citext
+  neo_city_mpg                  String? @db.Citext
+  neo_highway_mpg               String? @db.Citext
+  neo_weight                    String? @db.Citext
+  neo_width                     String? @db.Citext
+  neo_height                    String? @db.Citext
+  neo_length                    String? @db.Citext
+  neo_manufacturer_code         String? @db.Citext
+  neo_package_code              String? @db.Citext
+  neo_package_description       String? @db.Citext
+  neo_base_msrp                 String? @db.Citext
+  neo_installed_options_msrp    String? @db.Citext
+  neo_delivery_charges          String? @db.Citext
+  neo_combined_msrp             String? @db.Citext
+  neo_mfg_interior_color        String? @db.Citext
+  neo_mfg_exterior_color        String? @db.Citext
+  neo_installed_options_details String? @db.Citext
+  neo_high_value_features       String? @db.Citext
+  neo_options_packages          String? @db.Citext
+  mc_dealer_id                  String? @db.Citext
+  seller_name                   String? @db.Citext
+  dealer_type                   String? @db.Citext
+  stock_no                      String? @db.Citext
+  miles                         String? @db.Citext
+  msrp                          String? @db.Citext
+  price                         String? @db.Citext
+  scraped_at                    String? @db.Citext
+  status_date                   String? @db.Citext
+  first_scraped_at              String? @db.Citext
+  source                        String? @db.Citext
+  inventory_type                String? @db.Citext
+  photo_links                   String? @db.Citext
+  photo_url                     String? @db.Citext
+  dom                           String? @db.Citext
+  dom_180                       String? @db.Citext
+  dom_active                    String? @db.Citext
+  more_info                     String? @db.Citext
+  carfax_1_owner                String? @db.Citext
+  carfax_clean_title            String? @db.Citext
+  dos_active                    String? @db.Citext
+  is_searchable                 String? @db.Citext
+  mc_price                      String? @db.Citext
+  mc_website_id                 String? @db.Citext
+  source_filename               String? @db.Citext
+  row_index                     Int?
+
+  @@ignore
+}
+
+/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ext_partial_data_dump_new {
+  vin                           String? @db.Citext
+  zip                           String? @db.Citext
+  neo_year                      String? @db.Citext
+  neo_make                      String? @db.Citext
+  neo_model                     String? @db.Citext
+  neo_trim                      String? @db.Citext
+  neo_trim_confidence           String? @db.Citext
+  neo_version                   String? @db.Citext
+  neo_version_confidence        String? @db.Citext
+  neo_vehicle_type              String? @db.Citext
+  neo_body_type                 String? @db.Citext
+  neo_body_subtype              String? @db.Citext
+  neo_drivetrain                String? @db.Citext
+  neo_powertrain_type           String? @db.Citext
+  neo_fuel_type                 String? @db.Citext
+  neo_engine                    String? @db.Citext
+  neo_engine_block              String? @db.Citext
+  neo_engine_size               String? @db.Citext
+  neo_transmission              String? @db.Citext
+  neo_doors                     String? @db.Citext
+  neo_cylinders                 String? @db.Citext
+  neo_city_mpg                  String? @db.Citext
+  neo_highway_mpg               String? @db.Citext
+  neo_weight                    String? @db.Citext
+  neo_width                     String? @db.Citext
+  neo_height                    String? @db.Citext
+  neo_length                    String? @db.Citext
+  neo_manufacturer_code         String? @db.Citext
+  neo_package_code              String? @db.Citext
+  neo_package_description       String? @db.Citext
+  neo_base_msrp                 String? @db.Citext
+  neo_installed_options_msrp    String? @db.Citext
+  neo_delivery_charges          String? @db.Citext
+  neo_combined_msrp             String? @db.Citext
+  neo_mfg_interior_color        String? @db.Citext
+  neo_mfg_exterior_color        String? @db.Citext
+  neo_installed_options_details String? @db.Citext
+  neo_high_value_features       String? @db.Citext
+  neo_options_packages          String? @db.Citext
+  mc_dealer_id                  String? @db.Citext
+  seller_name                   String? @db.Citext
+  dealer_type                   String? @db.Citext
+  stock_no                      String? @db.Citext
+  miles                         String? @db.Citext
+  msrp                          String? @db.Citext
+  price                         String? @db.Citext
+  scraped_at                    String? @db.Citext
+  status_date                   String? @db.Citext
+  first_scraped_at              String? @db.Citext
+  source                        String? @db.Citext
+  inventory_type                String? @db.Citext
+  photo_links                   String? @db.Citext
+  photo_url                     String? @db.Citext
+  dom                           String? @db.Citext
+  dom_180                       String? @db.Citext
+  dom_active                    String? @db.Citext
+  more_info                     String? @db.Citext
+  carfax_1_owner                String? @db.Citext
+  carfax_clean_title            String? @db.Citext
+  dos_active                    String? @db.Citext
+  is_searchable                 String? @db.Citext
+  mc_price                      String? @db.Citext
+  mc_website_id                 String? @db.Citext
+  source_filename               String? @db.Citext
+  row_index                     Int?
+  hash                          String?
+
+  @@ignore
+}
+
+/// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ext_partial_data_dump_used {
+  vin                           String? @db.Citext
+  zip                           String? @db.Citext
+  neo_year                      String? @db.Citext
+  neo_make                      String? @db.Citext
+  neo_model                     String? @db.Citext
+  neo_trim                      String? @db.Citext
+  neo_trim_confidence           String? @db.Citext
+  neo_version                   String? @db.Citext
+  neo_version_confidence        String? @db.Citext
+  neo_vehicle_type              String? @db.Citext
+  neo_body_type                 String? @db.Citext
+  neo_body_subtype              String? @db.Citext
+  neo_drivetrain                String? @db.Citext
+  neo_powertrain_type           String? @db.Citext
+  neo_fuel_type                 String? @db.Citext
+  neo_engine                    String? @db.Citext
+  neo_engine_block              String? @db.Citext
+  neo_engine_size               String? @db.Citext
+  neo_transmission              String? @db.Citext
+  neo_doors                     String? @db.Citext
+  neo_cylinders                 String? @db.Citext
+  neo_city_mpg                  String? @db.Citext
+  neo_highway_mpg               String? @db.Citext
+  neo_weight                    String? @db.Citext
+  neo_width                     String? @db.Citext
+  neo_height                    String? @db.Citext
+  neo_length                    String? @db.Citext
+  neo_manufacturer_code         String? @db.Citext
+  neo_package_code              String? @db.Citext
+  neo_package_description       String? @db.Citext
+  neo_base_msrp                 String? @db.Citext
+  neo_installed_options_msrp    String? @db.Citext
+  neo_delivery_charges          String? @db.Citext
+  neo_combined_msrp             String? @db.Citext
+  neo_mfg_interior_color        String? @db.Citext
+  neo_mfg_exterior_color        String? @db.Citext
+  neo_installed_options_details String? @db.Citext
+  neo_high_value_features       String? @db.Citext
+  neo_options_packages          String? @db.Citext
+  mc_dealer_id                  String? @db.Citext
+  seller_name                   String? @db.Citext
+  dealer_type                   String? @db.Citext
+  stock_no                      String? @db.Citext
+  miles                         String? @db.Citext
+  msrp                          String? @db.Citext
+  price                         String? @db.Citext
+  scraped_at                    String? @db.Citext
+  status_date                   String? @db.Citext
+  first_scraped_at              String? @db.Citext
+  source                        String? @db.Citext
+  inventory_type                String? @db.Citext
+  photo_links                   String? @db.Citext
+  photo_url                     String? @db.Citext
+  dom                           String? @db.Citext
+  dom_180                       String? @db.Citext
+  dom_active                    String? @db.Citext
+  more_info                     String? @db.Citext
+  carfax_1_owner                String? @db.Citext
+  carfax_clean_title            String? @db.Citext
+  dos_active                    String? @db.Citext
+  is_searchable                 String? @db.Citext
+  mc_price                      String? @db.Citext
+  mc_website_id                 String? @db.Citext
+  source_filename               String? @db.Citext
+  row_index                     Int?
+  hash                          String?
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ext_zip_codes {
+  zip                      String? @db.Citext
+  type                     String? @db.Citext
+  decommissioned           String? @db.Citext
+  primary_city             String? @db.Citext
+  acceptable_cities        String? @db.Citext
+  unacceptable_cities      String? @db.Citext
+  state                    String? @db.Citext
+  county                   String? @db.Citext
+  timezone                 String? @db.Citext
+  area_codes               String? @db.Citext
+  world_region             String? @db.Citext
+  country                  String? @db.Citext
+  latitude                 String? @db.Citext
+  longitude                String? @db.Citext
+  irs_estimated_population String? @db.Citext
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model ext_zips {
+  zip_code      String? @db.Citext
+  json_response Json?   @db.Json
+
+  @@ignore
+}
+
+model file_logs_and_sequence {
+  file_name                                 String    @id @db.Citext
+  the_date                                  DateTime? @db.Date
+  xfm_started                               DateTime? @db.Timestamptz(6)
+  xfm_completed                             DateTime? @db.Timestamptz(6)
+  is_complete                               Boolean?  @default(false)
+  dne                                       Boolean?  @default(false)
+  partition_name                            String?   @db.Citext
+  filename                                  String?   @db.VarChar(50)
+  mc_us_new_neovin_combined_20241127_csv_gz String?   @map("mc_us_new_neovin_combined_20241127.csv.gz") @db.VarChar(50)
+}
+
+model neo_vins {
+  vin                           String   @id(map: "mc_neo_vin_pk") @db.Citext
+  neo_year                      Int
+  neo_make                      String   @db.Citext
+  neo_model                     String   @db.Citext
+  neo_trim                      String?  @db.Citext
+  neo_trim_confidence           String?  @db.Citext
+  neo_version                   String?  @db.Citext
+  neo_version_confidence        String?  @db.Citext
+  neo_vehicle_type              String?  @db.Citext
+  neo_body_type                 String?  @db.Citext
+  neo_body_subtype              String?  @db.Citext
+  neo_drivetrain                String?  @db.Citext
+  neo_powertrain_type           String?  @db.Citext
+  neo_fuel_type                 String?  @db.Citext
+  neo_engine                    String?  @db.Citext
+  neo_engine_block              String?  @db.Citext
+  neo_engine_size               String?  @db.Citext
+  neo_transmission              String?  @db.Citext
+  neo_doors                     Int?
+  neo_cylinders                 String?  @db.Citext
+  neo_city_mpg                  String?  @db.Citext
+  neo_highway_mpg               Decimal? @db.Decimal
+  neo_weight                    Decimal? @db.Decimal
+  neo_width                     Decimal? @db.Decimal
+  neo_height                    Decimal? @db.Decimal
+  neo_length                    Decimal? @db.Decimal
+  neo_manufacturer_code         String?  @db.Citext
+  neo_package_code              String?  @db.Citext
+  neo_package_description       String?  @db.Citext
+  neo_base_msrp                 Decimal? @db.Decimal
+  neo_installed_options_msrp    Decimal? @db.Decimal
+  neo_delivery_charges          Decimal? @db.Decimal
+  neo_combined_msrp             Decimal? @db.Decimal
+  neo_mfg_interior_color        Json?
+  neo_mfg_exterior_color        Json?
+  neo_installed_options_details Json?
+  neo_high_value_features       Json?
+  neo_options_packages          String?  @db.Citext
+  added_date                    DateTime @db.Date
+
+  @@index([neo_make, neo_model, neo_year, neo_trim])
+}
+
+model vin_listing_data {
+  listing_id            Int       @id(map: "vin_listing_data_pk") @default(autoincrement())
+  hash                  String
+  vin                   String    @db.Citext
+  dealer_id             BigInt
+  stock_number          String?   @db.Citext
+  miles                 Int?
+  listing_msrp          Decimal?  @db.Decimal
+  listing_price         Int?
+  mc_scraped_at         DateTime? @db.Timestamp(6)
+  mc_status_date        DateTime? @db.Timestamp(6)
+  mc_first_scraped_at   DateTime? @db.Timestamp(6)
+  source_url            String?   @db.Citext
+  inventory_type        String?   @db.Citext
+  days_on_market        Int?
+  days_on_market_180    Int?
+  days_on_market_active Int?
+  more_info_url         String?   @db.Citext
+  carfax_1_owner        Int?
+  carfax_clean_title    Int?
+  days_on_site_active   Int?
+  is_searchable         Int?
+  marketcheck_price     Decimal?  @db.Decimal
+  mc_website_id         Int
+  photo_url             String?   @db.Citext
+  from_date             DateTime  @db.Date
+  thru_date             DateTime  @default(dbgenerated("'9999-12-31'::date")) @db.Date
+  last_updated          DateTime  @db.Date
+  current_row           Boolean?  @default(true)
+  is_active             Boolean?  @default(true)
+}
